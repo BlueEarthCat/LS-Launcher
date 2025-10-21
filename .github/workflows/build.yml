@@ -1,11 +1,15 @@
-name: Build
+name: Build and Release
 
-on: push
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'  # v1.0.0 같은 태그로 릴리스 트리거
 
 jobs:
-  release:
+  build-and-release:
     runs-on: ${{ matrix.os }}
-
     permissions:
       contents: write
 
@@ -15,19 +19,19 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # v3 -> v4로 업데이트 (최신 추천)
 
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Dependenciesទ
         run: npm ci
         shell: bash
 
@@ -36,3 +40,30 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist
         shell: bash
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ls-launcher-${{ matrix.os }}
+          path: dist/*  # npm run dist의 출력 폴더 (프로젝트에 맞게 조정)
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')  # 태그 푸시일 때만 실행
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: Auto-generated release for ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/LS-Launcher-${{ matrix.os }}  # 출력 파일 경로/이름 지정
+          asset_name: LS-Launcher-${{ github.ref_name }}-${{ matrix.os }}
+          asset_content_type: application/octet-stream
