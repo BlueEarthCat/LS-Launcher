@@ -5,21 +5,19 @@ on:
     branches:
       - main
     tags:
-      - 'v*'  # v1.0.0 같은 태그로 릴리스 트리거
+      - 'v*'  # 태그 푸시(v1.0.0 등)로 릴리스 트리거
 
 jobs:
   build-and-release:
     runs-on: ${{ matrix.os }}
     permissions:
-      contents: write
-
+      contents: write  # 릴리스 생성 및 에셋 업로드 권한
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4  # v3 -> v4로 업데이트 (최신 추천)
+        uses: actions/checkout@v4
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -31,7 +29,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Dependenciesទ
+      - name: Install Dependencies
         run: npm ci
         shell: bash
 
@@ -45,25 +43,26 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ls-launcher-${{ matrix.os }}
-          path: dist/*  # npm run dist의 출력 폴더 (프로젝트에 맞게 조정)
+          path: dist/*
+          retention-days: 1  # 아티팩트 보관 기간 (필요 시 조정)
 
       - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/v')  # 태그 푸시일 때만 실행
+        if: startsWith(github.ref, 'refs/tags/v')
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body: Auto-generated release for ${{ github.ref_name }}
+          body: Auto-generated release for LS-Launcher ${{ github.ref_name }}
           draft: false
           prerelease: false
 
-      - name: Upload Release Assets
+      - name: Upload Release Asset
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/LS-Launcher-${{ matrix.os }}  # 출력 파일 경로/이름 지정
-          asset_name: LS-Launcher-${{ github.ref_name }}-${{ matrix.os }}
-          asset_content_type: application/octet-stream
+          asset_path: dist/LS-Launcher  # 실제 파일 이름으로 대체 필요
+          asset_name: LS-Launcher-${{ github.ref_name }}-${{ matrix.os }}${{ matrix.os == 'macos-latest' && '.dmg' || matrix.os == 'ubuntu-latest' && '.AppImage' || '.exe' }}
+          asset_content_type: ${{ matrix.os == 'macos-latest' && 'application/x-apple-diskimage' || matrix.os == 'ubuntu-latest' && 'application/octet-stream' || 'application/x-msdownload' }}
