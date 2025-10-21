@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>라스트 세이비어스 뉴스</title>
+        <link>https://discord.gg/9qUBNEzESd</link>
+        <description>라스트 세이비어스의 최신 소식과 이벤트</description>
+        <language>ko-KR</language>
+        <lastBuildDate>Wed, 22 Oct 2025 01:10:00 +0900</lastBuildDate>
+
+        <item>
+            <title>라스트 세이비어스 정식 오픈 완료</title>
+            <link>https://discord.com/channels/1247900643645980814/1247904581489397871/1426734883576741899</link>
+            <description>
+                안녕하세요, 라스트 세이비어스입니다. 지난 10월 12일 오전 10시에 라스트 세이비어스가 성공적으로 정식 오픈했습니다!  
+                **안내 사항**:  
+                - Final Beta 이후 모든 데이터는 유지되었으며, 정식 오픈을 기념하여 다양한 이벤트가 진행되었습니다.  
+                **이벤트 요약**:  
+                - 정식 오픈 출석체크  
+                - 정식 오픈 기념 패키지 구매 횟수 증가  
+                - 정식 오픈 기념 레벨 달성 쿠폰 
+                항상 사랑해주셔서 감사합니다. 앞으로도 더 재밌고 풍성한 라스트 세이비어스로 보답하겠습니다.
+            </description>
+            <pubDate>Sun, 12 Oct 2025 10:00:00 +0900</pubDate>
+            <guid>https://discord.com/channels/1247900643645980814/1247904581489397871/1426734883576741899</guid>
+        </item>
+    </channel>
+</rss>
