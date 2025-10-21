@@ -48,8 +48,5 @@
     "type": "git",
     "url": "git+https://github.com/blueearthcat/LS-Launcher.git"
   },
-  "keywords": [],
-  "directories": {
-    "doc": "docs"
-  }
+  "keywords": []
 }
