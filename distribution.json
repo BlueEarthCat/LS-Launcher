@@ -215,19 +215,6 @@
           }
         },
         {
-          "id": "com.moulberry:flashback:0.34.0@jar",
-          "name": "Flashback",
-          "type": "FabricMod",
-          "artifact": {
-            "size": 208009361,
-            "url": "https://blueearthcat.github.io/LS-Launcher/servers/LastSaviors-1.21.4/fabricmods/optionalon/Flashback-0.34.0-for-MC1.21.4.jar",
-            "MD5": "fc7f4222472f236701175c7b55aaf178"
-          },
-          "required": {
-            "value": false
-          }
-        },
-        {
           "id": "fuzs.forgeconfigapiport.fabric.impl:forgeconfigapiport:21.4.1@jar",
           "name": "Forge Config API Port",
           "type": "FabricMod",
