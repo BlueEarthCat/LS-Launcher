@@ -14,9 +14,9 @@
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder build",
-    "dist:win": "npm run dist -- -w",
-    "dist:mac": "npm run dist -- -m",
-    "dist:linux": "npm run dist -- -l",
+    "dist:win": "electron-builder build -w",
+    "dist:mac": "electron-builder build -m",
+    "dist:linux": "electron-builder build -l",
     "lint": "eslint --config .eslintrc.json ."
   },
   "engines": {
@@ -48,8 +48,8 @@
     "type": "git",
     "url": "git+https://github.com/blueearthcat/LS-Launcher.git"
   },
+  "keywords": [],
   "directories": {
     "doc": "docs"
-  },
-  "keywords": []
+  }
 }

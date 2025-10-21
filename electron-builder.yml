@@ -1,51 +1,37 @@
-appId: 'lslauncher'
-productName: 'LastSaviors Launcher'
-artifactName: '${productName}-setup-${version}.${ext}'
-
-copyright: 'Copyright © 2018-2025 BlueEarthCat'
-
+appId: lslauncher
+productName: LastSaviors Launcher
+artifactName: ${productName}-setup-${version}.${ext}
+copyright: Copyright © 2018-2025 BlueEarthCat
 asar: true
-compression: 'maximum'
-
+compression: maximum
 files:
   - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
-
-extraResources:
-  - 'libraries'
-
-# Windows Configuration
+extraResources: 
+  - libraries
+directories: 
+  buildResources: build
+  output: dist
 win: 
-  target: 
-    - target: 'nsis'
-      arch: 'x64'
-
-# Windows Installer Configuration
+  target:
+    - target: nsis
+      arch: x64
 nsis:
   oneClick: false
   perMachine: false
   allowElevation: true
   allowToChangeInstallationDirectory: true
-
-# macOS Configuration
 mac:
   target:
-    - target: 'dmg'
+    - target: dmg
       arch:
-        - 'x64'
-        - 'arm64'
-  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
-  category: 'public.app-category.games'
-
-# Linux Configuration
-linux: 
-  target: 'AppImage'
-  maintainer: 'BlueEarthCat'
-  vendor: 'BlueEarthCat'
-  synopsis: 'For Minecraft 1.21.4 Server Last Saviors'
-  description: 'For Minecraft 1.21.4 Server Last Saviors'
-  category: 'Game'
-
-
-directories:
-  buildResources: 'build'
-  output: 'dist'
+        - x64
+        - arm64
+  artifactName: ${productName}-setup-${version}-${arch}.${ext}
+  category: public.app-category.games
+linux:
+  target: AppImage
+  maintainer: BlueEarthCat
+  vendor: BlueEarthCat
+  synopsis: For Minecraft 1.21.4 Server Last Saviors
+  description: For Minecraft 1.21.4 Server Last Saviors
+  category: Game
