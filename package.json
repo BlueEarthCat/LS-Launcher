@@ -14,9 +14,9 @@
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder build",
-    "dist:win": "electron-builder build -w --publish always",
-    "dist:mac": "electron-builder build -m --publish always",
-    "dist:linux": "electron-builder build -l --publish always",
+    "dist:win": "electron-builder build -w --publish never",
+    "dist:mac": "electron-builder build -m --publish never",
+    "dist:linux": "electron-builder build -l --publish never",
     "lint": "eslint --config .eslintrc.json ."
   },
   "engines": {
