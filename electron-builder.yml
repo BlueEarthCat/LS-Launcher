@@ -11,6 +11,7 @@ extraResources:
 directories: 
   buildResources: build
   output: dist
+
 win: 
   target:
     - target: nsis
@@ -20,6 +21,7 @@ nsis:
   perMachine: false
   allowElevation: true
   allowToChangeInstallationDirectory: true
+
 mac:
   target:
     - target: dmg
@@ -28,6 +30,7 @@ mac:
         - arm64
   artifactName: ${productName}-setup-${version}-${arch}.${ext}
   category: public.app-category.games
+
 linux:
   target: AppImage
   maintainer: BlueEarthCat

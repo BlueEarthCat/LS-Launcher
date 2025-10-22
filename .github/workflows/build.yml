@@ -40,7 +40,6 @@ jobs:
             npm run dist:mac
           else
             npm run dist:linux
-          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -57,17 +56,17 @@ jobs:
       actions: write
       contents: write
     steps:
-      - name: Download All Artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
 
-      - name: Create Release
+      - name: Create GitHub Release
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GH_TOKEN }}
-          tag_name: ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: Auto-generated release for LastSaviors Launcher ${{ github.ref_name }}
           draft: false
@@ -96,19 +95,3 @@ jobs:
           asset_path: artifacts/ls-launcher-ubuntu-latest/*.AppImage
           asset_name: LastSaviors-Launcher-${{ github.ref_name }}-linux.AppImage
           asset_content_type: application/octet-stream
-
-      - name: Upload Windows Update Metadata
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-windows-latest/latest.yml
-          asset_name: latest.yml
-          asset_content_type: text/plain
-
-      - name: Upload macOS Update Metadata
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-macos-latest/latest-mac.yml
-          asset_name: latest-mac.yml
-          asset_content_type: text/plain

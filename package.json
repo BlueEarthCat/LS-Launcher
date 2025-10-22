@@ -17,8 +17,7 @@
     "dist:win": "electron-builder build -w --publish never",
     "dist:mac": "electron-builder build -m --publish never",
     "dist:linux": "electron-builder build -l --publish never",
-    "lint": "eslint --config .eslintrc.json .",
-    "build": "git push origin :v1.0.0 | git push origin v1.0.0"
+    "lint": "eslint --config .eslintrc.json ."
   },
   "engines": {
     "node": "20.x.x"
@@ -42,7 +41,7 @@
   },
   "devDependencies": {
     "electron": "^33.2.1",
-    "electron-builder": "^26.0.12",
+    "electron-builder": "^25.1.8",
     "eslint": "^8.57.1"
   },
   "repository": {
@@ -51,3 +50,4 @@
   },
   "keywords": []
 }
+
