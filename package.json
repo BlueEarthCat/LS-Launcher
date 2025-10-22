@@ -17,7 +17,8 @@
     "dist:win": "electron-builder build -w --publish never",
     "dist:mac": "electron-builder build -m --publish never",
     "dist:linux": "electron-builder build -l --publish never",
-    "lint": "eslint --config .eslintrc.json ."
+    "lint": "eslint --config .eslintrc.json .",
+    "build" : "git push origin :v1.0.0 | git push origin v1.0.0"
   },
   "engines": {
     "node": "20.x.x"
