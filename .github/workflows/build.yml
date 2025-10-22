@@ -24,10 +24,18 @@ jobs:
         with:
           node-version: 20
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
       - name: Install Dependencies
         run: npm ci
+        shell: bash
 
       - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             npm run dist:win
@@ -36,51 +44,57 @@ jobs:
           else
             npm run dist:linux
           fi
+        shell: bash
+
+      - name: List Build Output
+        run: ls -R dist/ || dir dist\
+        shell: bash
+        continue-on-error: true
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ls-launcher-${{ matrix.os }}
+          path: dist/*
+          retention-days: 1
 
       - name: Find Release Asset
         if: startsWith(github.ref, 'refs/tags/v')
         id: find_artifact
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            $ASSET_PATH = Get-ChildItem dist/*setup*.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
-            if (-not $ASSET_PATH) {
-              Write-Error "No matching .exe file found in dist/ for ${{ matrix.os }}"
-              exit 1
-            }
-            Write-Output "ASSET_PATH=$ASSET_PATH" | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+            ASSET_PATH=$(ls dist/*setup*.exe 2>/dev/null | head -n 1 || echo "")
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             ASSET_PATH=$(ls dist/*.dmg 2>/dev/null | head -n 1 || echo "")
-            if [ -z "$ASSET_PATH" ]; then
-              echo "No matching .dmg file found in dist/ for ${{ matrix.os }}"
-              exit 1
-            }
-            echo "ASSET_PATH=$ASSET_PATH" >> $GITHUB_OUTPUT
           else
             ASSET_PATH=$(ls dist/*.AppImage 2>/dev/null | head -n 1 || echo "")
-            if [ -z "$ASSET_PATH" ]; then
-              echo "No matching .AppImage file found in dist/ for ${{ matrix.os }}"
-              exit 1
-            }
-            echo "ASSET_PATH=$ASSET_PATH" >> $GITHUB_OUTPUT
           fi
+          if [ -z "$ASSET_PATH" ]; then
+            echo "No matching file found in dist/ for ${{ matrix.os }}"
+            exit 1
+          fi
+          echo "ASSET_PATH=$ASSET_PATH" >> $GITHUB_OUTPUT
+        shell: bash
 
-      - name: Create and Upload Release
-        if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest'
-        uses: softprops/action-gh-release@v2
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: create_release
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}  # tag_name 대신 tag 사용
           name: Release ${{ github.ref_name }}
           body: Auto-generated release for LastSaviors Launcher ${{ github.ref_name }}
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release Asset
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: ${{ steps.find_artifact.outputs.ASSET_PATH }}
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.find_artifact.outputs.ASSET_PATH }}
+          asset_name: LastSaviors-Launcher-${{ github.ref_name }}-${{ matrix.os }}${{ matrix.os == 'macos-latest' && '.dmg' || matrix.os == 'ubuntu-latest' && '.AppImage' || '.exe' }}
+          asset_content_type: ${{ matrix.os == 'macos-latest' && 'application/x-apple-diskimage' || matrix.os == 'ubuntu-latest' && 'application/octet-stream' || 'application/x-msdownload' }}
