@@ -25,7 +25,7 @@ jobs:
       - run: npm ci
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             npm run dist:win
@@ -57,7 +57,7 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: Auto-generated release for LastSaviors Launcher ${{ github.ref_name }}
