@@ -52,7 +52,25 @@ jobs:
         with:
           path: artifacts
 
-      - name: Create GitHub Release
+      # Windows artifact 복사
+      - name: Prepare Windows artifact
+        run: |
+          mkdir -p artifacts/ls-launcher-windows-latest
+          cp dist/*setup*.exe artifacts/ls-launcher-windows-latest/
+
+      # macOS artifact 복사
+      - name: Prepare macOS artifact
+        run: |
+          mkdir -p artifacts/ls-launcher-macos-latest
+          cp dist/*.dmg artifacts/ls-launcher-macos-latest/
+
+      # Linux artifact 복사
+      - name: Prepare Linux artifact
+        run: |
+          mkdir -p artifacts/ls-launcher-ubuntu-latest
+          cp dist/*.AppImage artifacts/ls-launcher-ubuntu-latest/
+
+      - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
@@ -67,7 +85,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-windows-latest/LastSaviors-Launcher-setup-${{ github.ref_name }}.exe
+          asset_path: artifacts/ls-launcher-windows-latest/*setup*.exe
           asset_name: LastSaviors-Launcher-${{ github.ref_name }}-windows.exe
           asset_content_type: application/x-msdownload
 
@@ -75,22 +93,14 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-macos-latest/LastSaviors-Launcher-setup-${{ github.ref_name }}-x64.dmg
-          asset_name: LastSaviors-Launcher-${{ github.ref_name }}-macos-x64.dmg
-          asset_content_type: application/x-apple-diskimage
-
-      - name: Upload macOS ARM Asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-macos-latest/LastSaviors-Launcher-setup-${{ github.ref_name }}-arm64.dmg
-          asset_name: LastSaviors-Launcher-${{ github.ref_name }}-macos-arm64.dmg
+          asset_path: artifacts/ls-launcher-macos-latest/*.dmg
+          asset_name: LastSaviors-Launcher-${{ github.ref_name }}-macos.dmg
           asset_content_type: application/x-apple-diskimage
 
       - name: Upload Linux Asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ls-launcher-ubuntu-latest/LastSaviors-Launcher-setup-${{ github.ref_name }}.AppImage
+          asset_path: artifacts/ls-launcher-ubuntu-latest/*.AppImage
           asset_name: LastSaviors-Launcher-${{ github.ref_name }}-linux.AppImage
           asset_content_type: application/octet-stream
