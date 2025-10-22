@@ -21,6 +21,7 @@ jobs:
           python-version: '3.x'
       - run: npm ci
       - name: Build
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             npm run dist:win -- --publish never
@@ -28,6 +29,7 @@ jobs:
             npm run dist:mac -- --publish never
           else
             npm run dist:linux -- --publish never
+          fi
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
