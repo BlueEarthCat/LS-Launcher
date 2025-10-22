@@ -54,21 +54,33 @@ jobs:
 
       # Windows artifact 복사
       - name: Prepare Windows artifact
+        shell: bash
         run: |
           mkdir -p artifacts/ls-launcher-windows-latest
-          cp dist/*setup*.exe artifacts/ls-launcher-windows-latest/
+          shopt -s nullglob
+          for f in dist/*setup*.exe; do
+            cp "$f" artifacts/ls-launcher-windows-latest/
+          done
 
       # macOS artifact 복사
       - name: Prepare macOS artifact
+        shell: bash
         run: |
           mkdir -p artifacts/ls-launcher-macos-latest
-          cp dist/*.dmg artifacts/ls-launcher-macos-latest/
+          shopt -s nullglob
+          for f in dist/*.dmg; do
+            cp "$f" artifacts/ls-launcher-macos-latest/
+          done
 
       # Linux artifact 복사
       - name: Prepare Linux artifact
+        shell: bash
         run: |
           mkdir -p artifacts/ls-launcher-ubuntu-latest
-          cp dist/*.AppImage artifacts/ls-launcher-ubuntu-latest/
+          shopt -s nullglob
+          for f in dist/*.AppImage; do
+            cp "$f" artifacts/ls-launcher-ubuntu-latest/
+          done
 
       - name: Create Release
         id: create_release
