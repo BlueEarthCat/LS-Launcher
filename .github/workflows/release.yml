@@ -22,6 +22,8 @@ jobs:
       - run: npm ci
       - name: Build
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             npm run dist:win -- --publish never

@@ -2,7 +2,7 @@
 
 **Minecraft 1.21.4 Launcher for LastSaviors Server**
 
-![LastSaviors Launcher](https://user-images.githubusercontent.com/blueearthcat/placeholder-image.png)
+![LastSaviors Launcher](https://blueearthcat.github.io/LS-Launcher/build/icon.png)
 
 ## 소개
 
