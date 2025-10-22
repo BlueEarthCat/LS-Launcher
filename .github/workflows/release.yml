@@ -27,9 +27,9 @@ jobs:
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             npm run dist:win -- --publish never
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            npm run dist:mac -- --publish never || echo "macOS build failed, skipping"
+            npm run dist:mac -- --publish never
           else
-            npm run dist:linux -- --publish never || echo "Linux build failed, skipping"
+            npm run dist:linux -- --publish never
           fi
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
