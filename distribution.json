@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "rss": "https://blueearthcat.github.io/LS-Launcher_NEWS/news.xml",
   "discord": {
     "clientId": "<FILL IN OR REMOVE DISCORD OBJECT>",
@@ -12,7 +12,7 @@
       "name": "LastSaviors (Minecraft 1.21.4)",
       "description": "LastSaviors Running Minecraft 1.21.4",
       "icon": "https://blueearthcat.github.io/LS-Launcher/build/icon.png",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "address": "mcrpg.kr",
       "minecraftVersion": "1.21.4",
       "discord": {

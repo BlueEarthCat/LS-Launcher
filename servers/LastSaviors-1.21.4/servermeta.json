@@ -1,7 +1,7 @@
 {
   "$schema": "file:///C:/Users/bluef/OneDrive/Desktop/BlueEarthCat%20Minecraft%20Launcher/Nebula/build2/schemas/ServerMetaSchema.schema.json",
   "meta": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "LastSaviors (Minecraft 1.21.4)",
     "description": "LastSaviors Running Minecraft 1.21.4",
     "icon": "https://blueearthcat.github.io/LS-Launcher/build/icon.png",
