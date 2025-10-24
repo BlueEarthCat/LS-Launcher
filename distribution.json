@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "rss": "https://blueearthcat.github.io/LS-Launcher_NEWS/news.xml",
   "discord": {
     "clientId": "<FILL IN OR REMOVE DISCORD OBJECT>",
@@ -12,7 +12,7 @@
       "name": "LastSaviors (Minecraft 1.21.4)",
       "description": "LastSaviors Running Minecraft 1.21.4",
       "icon": "https://blueearthcat.github.io/LS-Launcher/build/icon.png",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "address": "mcrpg.kr",
       "minecraftVersion": "1.21.4",
       "discord": {
@@ -306,11 +306,12 @@
           "type": "FabricMod",
           "artifact": {
             "size": 214106,
-            "url": "https://blueearthcat.github.io/LS-Launcher/servers/LastSaviors-1.21.4/fabricmods/optionalon/ShoulderSurfing-Fabric-1.21.4-4.11.0.jar",
+            "url": "https://blueearthcat.github.io/LS-Launcher/servers/LastSaviors-1.21.4/fabricmods/optionaloff/ShoulderSurfing-Fabric-1.21.4-4.11.0.jar",
             "MD5": "ed7f6f265356209c6d3de4f43d295091"
           },
           "required": {
-            "value": false
+            "value": false,
+            "def": false
           }
         },
         {
